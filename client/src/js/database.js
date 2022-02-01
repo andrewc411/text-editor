@@ -16,10 +16,10 @@ const initdb = async () =>
 export const putDb = async (content) => console.error('putDb not implemented');
 {
   console.log('PUT to the database');
-  const todosDb = await openDB('todos', 1);
-  const tx = todosDb.transaction('todos', 'readwrite');
-  const store = tx.objectStore('todos');
-  const request = store.put({ id: id, todo: content });
+  const todosDb = await openDB('jate', 1);
+  const tx = todosDb.transaction('jate', 'readwrite');
+  const store = tx.objectStore('jate');
+  const request = store.put({ id: id, content: content });
   const result = await request;
   console.log('🚀 - data saved to the database', result);
 };

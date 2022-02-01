@@ -9,38 +9,28 @@ const { InjectManifest } = require('workbox-webpack-plugin');
 module.exports = () => {
   return {
     mode: 'development',
-    devtool: "source-map",
     entry: {
       main: './src/js/index.js',
       install: './src/js/install.js'
+    },
+    experiments:{
+      topLevelAwait: true,
     },
     output: {
       filename: '[name].bundle.js',
       path: path.resolve(__dirname, 'dist'),
     },
-    experiments: {
-      topLevelAwait: true
-    },
     plugins: [
-      
-        new HtmlWebpackPlugin({
-        title: 'Text-Editor',
+      new HtmlWebpackPlugin({
         template: './index.html',
+        title: 'JATE'
       }),
-
-       // Injects our custom service worker
-       new InjectManifest({
-        swSrc: './src-sw.js',
-        swDest: 'src-sw.js',
-      }),
-
-      // Creates a manifest.json file.
       new WebpackPwaManifest({
         fingerprints: false,
         inject: true,
-        name: 'Text-Editor',
-        short_name: 'editor',
-        description: 'Create and save code snippets with or without internet!',
+        name: 'Just another text editor',
+        short_name: 'JATE',
+        description: 'Save your coding stuff!',
         background_color: '#225ca3',
         theme_color: '#225ca3',
         start_url: '/',
@@ -54,7 +44,7 @@ module.exports = () => {
         ],
       }),
     ],
-      
+
     module: {
       rules: [
         {
@@ -63,12 +53,11 @@ module.exports = () => {
         },
         {
           test: /\.m?js$/,
-          exclude: /node_modules/,
+          exclude: /(node_modules|bower_components)/,
           use: {
             loader: 'babel-loader',
             options: {
               presets: ['@babel/preset-env'],
-              plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/transform-runtime'],
             },
           },
         },
